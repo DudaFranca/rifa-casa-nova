@@ -12,5 +12,6 @@ class Guest extends Model
         'phone',
         'companions_count',
         'is_confirmed',
+        'message',
     ];
 }

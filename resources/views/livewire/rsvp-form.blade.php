@@ -67,6 +67,15 @@
                     </div>
                 </div>
 
+                <!-- Recado (Message) -->
+                <div>
+                    <label for="message" class="block text-sm font-medium text-blue-200 mb-2 uppercase tracking-wider">Deixe um recado para nós (Opcional)</label>
+                    <textarea id="message" wire:model="message" rows="3"
+                        class="w-full bg-blue-900/30 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-colors"
+                        placeholder="Escreva sua mensagem com carinho..."></textarea>
+                    @error('message') <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span> @enderror
+                </div>
+
                 <div class="pt-4">
                     <button type="submit" 
                         class="w-full bg-gradient-to-r from-[#D4AF37] to-[#F3E5AB] hover:from-[#C5A017] hover:to-[#E3D59B] text-[#5C4000] font-bold text-lg rounded-xl px-8 py-4 shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"

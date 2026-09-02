@@ -11,6 +11,7 @@ class RsvpForm extends Component
     public $phone;
     public $email;
     public $companions_count = 0;
+    public $message;
 
     public $successMessage = false;
 
@@ -21,6 +22,7 @@ class RsvpForm extends Component
             'phone' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'companions_count' => 'required|integer|min:0',
+            'message' => 'nullable|string|max:1000',
         ]);
 
         Guest::create([
@@ -29,10 +31,11 @@ class RsvpForm extends Component
             'email' => $this->email,
             'companions_count' => $this->companions_count,
             'is_confirmed' => true,
+            'message' => $this->message,
         ]);
 
         $this->successMessage = true;
-        $this->reset(['name', 'phone', 'email', 'companions_count']);
+        $this->reset(['name', 'phone', 'email', 'companions_count', 'message']);
         
         // Dispara um evento para rolar a tela até a rifa
         $this->dispatch('scroll-to-raffle');

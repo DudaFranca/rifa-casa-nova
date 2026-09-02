@@ -21,6 +21,7 @@
                             <th class="py-3 px-4">Nome</th>
                             <th class="py-3 px-4">WhatsApp</th>
                             <th class="py-3 px-4">Acompanhantes</th>
+                            <th class="py-3 px-4">Recado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,10 +30,11 @@
                             <td class="py-3 px-4">{{ $guest->name }}</td>
                             <td class="py-3 px-4">{{ $guest->phone }}</td>
                             <td class="py-3 px-4">{{ $guest->companions_count ?? 0 }}</td>
+                            <td class="py-3 px-4 max-w-xs truncate" title="{{ $guest->message }}">{{ $guest->message ?? '-' }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="3" class="py-4 text-center text-white/50">Nenhum convidado confirmado ainda.</td>
+                            <td colspan="4" class="py-4 text-center text-white/50">Nenhum convidado confirmado ainda.</td>
                         </tr>
                         @endforelse
                     </tbody>
