@@ -1,58 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# A&E Casa Nova (Flight CSN-2026) ✈️
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é o sistema desenvolvido para a comemoração de "Casa Nova" de Arthur & Eduarda. O projeto funciona como um convite interativo no formato de passagem aérea, permitindo confirmação de presença (Check-in) e a venda/reserva de rifas (Bagagem).
 
-## About Laravel
+## 🛠️ Stack Tecnológica
+- **Backend:** Laravel 11.x
+- **Frontend:** Livewire 3 + Alpine.js
+- **Estilização:** Tailwind CSS (via Vite)
+- **Banco de Dados:** MySQL / PostgreSQL (suportado pelo Eloquent)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🗂️ Estrutura e Funcionalidades Principais
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Landing Page (O Bilhete Aéreo)
+- **Rota:** `/` (View: `welcome.blade.php`)
+- Interface estilizada com Tailwind CSS reproduzindo um cartão de embarque temático.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. Check-in (RSVP)
+- **Componente:** `App\Livewire\RsvpForm`
+- **Model:** `Guest`
+- Permite aos convidados confirmarem presença.
+- **Campos salvos:** Nome, WhatsApp, E-mail, Quantidade de Acompanhantes e Status de confirmação.
 
-## Learning Laravel
+### 3. Bagagem (Sistema de Rifa)
+- **Componente:** `App\Livewire\RaffleGrid`
+- **Model:** `RaffleTicket`
+- Exibe uma grade interativa de números (simulando assentos do voo).
+- Usuários podem selecionar um "assento" disponível e preencher os dados para reservá-lo.
+- **Status da Rifa:** Pode ser `reserved` (Aguardando PIX) ou `paid` (Pagamento confirmado).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 4. Torre de Controle (Painel Admin)
+- **Rota:** `/admin-voo`
+- **Componente:** `App\Livewire\AdminPanel`
+- **Autenticação:** Protegido por um input de senha simples no próprio Livewire (Senha padrão atual: `admin123`).
+- **Recursos do Painel:**
+  - **Métrica:** Exibe o total de pessoas confirmadas (Somatório de Convidados + Seus Acompanhantes).
+  - **Lista de Presença:** Tabela com todos os convidados que fizeram check-in.
+  - **Gestão da Rifa:** Lista as reservas e permite que o Administrador clique no botão "Confirmar PIX", alterando o status da reserva do banco de dados de `reserved` para `paid` (mudando a cor da tag em tempo real).
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🚀 Guia de Deploy para o Desenvolvedor (Produção)
 
-## Agentic Development
+Siga os passos abaixo para colocar a aplicação no ar em um servidor de produção (como Forge, Vapor ou VPS tradicional).
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 1. Requisitos do Servidor
+- PHP >= 8.2
+- Composer
+- Node.js & NPM (para compilação de assets via Vite)
+- Banco de Dados configurado
 
+### 2. Instalação e Configuração
+
+Clone o repositório e instale as dependências do PHP:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install --optimize-autoloader --no-dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Copie o `.env` e gere a chave:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+Configure as credenciais do banco de dados no `.env`:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nome_do_banco
+DB_USERNAME=usuario
+DB_PASSWORD=senha
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Migrations
+Rode as migrations para criar as tabelas `guests` e `raffle_tickets`:
+```bash
+php artisan migrate --force
+```
 
-## Code of Conduct
+### 4. Compilação de Assets (CSS/JS)
+O projeto usa Tailwind e Vite. É **crucial** rodar o build para que as classes CSS (especialmente as fontes grandes do bilhete, como `text-7xl`) sejam injetadas no arquivo final:
+```bash
+npm install
+npm run build
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 5. Otimização do Laravel
+Rode os comandos de cache para maximizar a performance:
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
 
-## Security Vulnerabilities
+### 6. ⚠️ Ponto de Atenção: Senha do Admin
+Atualmente, a senha da rota `/admin-voo` está *hardcoded* (fixa) no arquivo `app/Livewire/AdminPanel.php` como `'admin123'` por simplicidade (já que não há um sistema de usuários completo).
+**Recomendação para Produção:** 
+Altere a lógica no método `authenticate()` do arquivo `AdminPanel.php` para puxar a senha do `.env` (ex: `env('ADMIN_PASSWORD')`) para maior segurança.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```php
+// app/Livewire/AdminPanel.php - Linha recomendada de alteração:
+if ($this->password === env('ADMIN_PASSWORD', 'sua-senha-segura')) {
+```
 
-## License
+### 7. Permissões de Pasta
+Certifique-se de que as pastas `storage` e `bootstrap/cache` têm permissão de escrita pelo servidor web (ex: `www-data` ou `nginx`):
+```bash
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Pronto! O sistema estará operando e pronto para receber os passageiros. 🛫
