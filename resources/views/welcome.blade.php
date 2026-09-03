@@ -96,7 +96,7 @@
                             </div>
                             <div class="flex flex-col items-start">
                                 <span class="text-[10px] md:text-[11px] font-semibold tracking-[0.15em] text-[#60a5fa] uppercase mb-1">Confirmar Até</span>
-                                <span class="text-xl md:text-2xl font-bold text-white tracking-tight">16.09</span>
+                                <span class="text-xl md:text-2xl font-bold text-white tracking-tight">18.09</span>
                             </div>
                             <div class="flex flex-col items-start">
                                 <span class="text-[10px] md:text-[11px] font-semibold tracking-[0.15em] text-[#60a5fa] uppercase mb-1">Local</span>
@@ -138,7 +138,7 @@
 
         <!-- Footer -->
         <footer class="w-full py-8 text-center text-xs text-blue-300/70 border-t border-white/10 mt-auto">
-            <p>Sorteio previsto para: 07.11.2026 | Método: Sorteio em Live | Prêmio: Voucher Airbnb de R$ 300,00 entregue digitalmente. Arthur & Duda Agradecem!</p>
+            <p>Sorteio previsto para: 07.11.2026 | Método: Sorteio em Live | Prêmio: Voucher Airbnb de R$ 500,00 entregue digitalmente. Arthur & Duda Agradecem!</p>
         </footer>
 
     </body>

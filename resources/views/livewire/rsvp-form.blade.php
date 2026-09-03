@@ -10,7 +10,7 @@
                 <h2 class="text-3xl font-semibold text-white tracking-tight">Faça seu Check-in</h2>
             </div>
             <p class="text-sm md:text-base text-blue-200/80 font-light max-w-xl">
-                Embarcando juntos numa vida a dois, numa casa nova — e queremos vocês com a gente nessa comemoração.
+                Embarcamos na viagem mais incrível das nossas vidas: morar juntos! Nossa casa nova está ganhando forma e fazemos muita questão que vocês celebrem e inaugurem esse novo destino com a gente.
             </p>
         </div>
 

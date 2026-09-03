@@ -74,11 +74,18 @@
                                 @endif
                             </td>
                             <td class="py-3 px-4 text-right">
-                                @if($ticket->status === 'reserved')
-                                    <button wire:click="markAsPaid({{ $ticket->id }})" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-lg transition-colors">
-                                        Confirmar PIX
+                                <div class="flex items-center justify-end gap-2">
+                                    @if($ticket->status === 'reserved')
+                                        <button wire:click="markAsPaid({{ $ticket->id }})" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-lg transition-colors">
+                                            Confirmar PIX
+                                        </button>
+                                    @endif
+                                    <button wire:click="cancelTicket({{ $ticket->id }})" 
+                                            wire:confirm="Tem certeza que deseja cancelar a compra/reserva do assento {{ str_pad($ticket->number, 2, '0', STR_PAD_LEFT) }}?"
+                                            class="bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/30 text-xs px-3 py-1.5 rounded-lg transition-colors">
+                                        Cancelar
                                     </button>
-                                @endif
+                                </div>
                             </td>
                         </tr>
                         @empty

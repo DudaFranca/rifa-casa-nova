@@ -28,6 +28,14 @@ class AdminPanel extends Component
         }
     }
 
+    public function cancelTicket($ticketId)
+    {
+        $ticket = RaffleTicket::find($ticketId);
+        if ($ticket) {
+            $ticket->delete();
+        }
+    }
+
     public function render()
     {
         if (!$this->isAuthenticated) {
