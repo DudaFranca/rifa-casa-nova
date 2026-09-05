@@ -1,9 +1,15 @@
-<div class="p-8 max-w-6xl mx-auto w-full">
-    <div class="flex flex-col sm:flex-row justify-between items-center mb-10 gap-4">
+<div class="p-4 sm:p-8 max-w-6xl mx-auto w-full">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
         <h1 class="text-3xl font-bold text-blue-300">Torre de Controle</h1>
-        <div class="bg-blue-900/60 border border-blue-400/30 rounded-xl px-6 py-3 text-center">
-            <div class="text-sm text-blue-200 uppercase tracking-wider">Total de Pessoas Confirmadas</div>
-            <div class="text-3xl font-bold">{{ $totalConfirmed }}</div>
+        <div class="flex flex-wrap sm:flex-nowrap gap-4 w-full md:w-auto">
+            <div class="bg-blue-900/60 border border-blue-400/30 rounded-xl px-6 py-3 text-center flex-1 sm:flex-none">
+                <div class="text-xs text-blue-200 uppercase tracking-wider mb-1 font-medium">Total de Pessoas Confirmadas</div>
+                <div class="text-3xl font-bold text-white">{{ $totalConfirmed }}</div>
+            </div>
+            <div class="bg-green-900/40 border border-green-400/30 rounded-xl px-6 py-3 text-center flex-1 sm:flex-none">
+                <div class="text-xs text-green-200 uppercase tracking-wider mb-1 font-medium">Valor Arrecadado</div>
+                <div class="text-3xl font-bold text-green-400">R$ {{ number_format($totalRaised, 2, ',', '.') }}</div>
+            </div>
         </div>
     </div>
 
@@ -22,6 +28,7 @@
                             <th class="py-3 px-4">WhatsApp</th>
                             <th class="py-3 px-4">Acompanhantes</th>
                             <th class="py-3 px-4">Recado</th>
+                            <th class="py-3 px-4 text-right">Ação</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -31,10 +38,17 @@
                             <td class="py-3 px-4">{{ $guest->phone }}</td>
                             <td class="py-3 px-4">{{ $guest->companions_count ?? 0 }}</td>
                             <td class="py-3 px-4 max-w-xs truncate" title="{{ $guest->message }}">{{ $guest->message ?? '-' }}</td>
+                            <td class="py-3 px-4 text-right">
+                                <button wire:click="cancelGuest({{ $guest->id }})" 
+                                        wire:confirm="Tem certeza que deseja cancelar a presença de {{ $guest->name }}?"
+                                        class="bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/30 text-xs px-3 py-1.5 rounded-lg transition-colors">
+                                    Cancelar Presença
+                                </button>
+                            </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="py-4 text-center text-white/50">Nenhum convidado confirmado ainda.</td>
+                            <td colspan="5" class="py-4 text-center text-white/50">Nenhum convidado confirmado ainda.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -79,12 +93,14 @@
                                         <button wire:click="markAsPaid({{ $ticket->id }})" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded-lg transition-colors">
                                             Confirmar PIX
                                         </button>
+                                        <button wire:click="cancelTicket({{ $ticket->id }})" 
+                                                wire:confirm="Tem certeza que deseja cancelar a reserva do assento {{ str_pad($ticket->number, 2, '0', STR_PAD_LEFT) }}?"
+                                                class="bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/30 text-xs px-3 py-1.5 rounded-lg transition-colors">
+                                            Cancelar
+                                        </button>
+                                    @else
+                                        <span class="text-xs text-white/40 italic">Não cancelável (Pago)</span>
                                     @endif
-                                    <button wire:click="cancelTicket({{ $ticket->id }})" 
-                                            wire:confirm="Tem certeza que deseja cancelar a compra/reserva do assento {{ str_pad($ticket->number, 2, '0', STR_PAD_LEFT) }}?"
-                                            class="bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/30 text-xs px-3 py-1.5 rounded-lg transition-colors">
-                                        Cancelar
-                                    </button>
                                 </div>
                             </td>
                         </tr>

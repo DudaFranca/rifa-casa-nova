@@ -5,26 +5,39 @@
      @close-modal.window="openModal = false"
      @tickets-reserved.window="window.open('https://wa.me/5581997328920?text=Oi Arthur e Duda! Reservei os assentos ' + $event.detail.numbers.join(', ') + ' e já fiz o PIX no valor de R$ ' + $event.detail.total + ',00!', '_blank')">
     
-    <div class="bg-black/20 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-12 w-full max-w-4xl mx-auto shadow-2xl mt-12 relative">
+    <div class="bg-black/20 backdrop-blur-md border border-white/10 rounded-3xl p-4 sm:p-8 md:p-12 w-full max-w-4xl mx-auto shadow-2xl mt-8 sm:mt-12 relative">
         
         <!-- Section Header -->
-        <div class="text-center mb-10">
-            <h2 class="text-2xl sm:text-3xl font-semibold text-white tracking-tight mb-2">Ajude na nossa Bagagem</h2>
-            <p class="text-blue-300 font-medium text-lg">(e concorra a um Voucher Airbnb de R$ 300)</p>
-            <div class="mt-4 inline-flex items-center gap-2 bg-blue-500/20 px-4 py-1.5 rounded-full border border-blue-400/30 text-blue-200 text-sm font-semibold">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div class="text-center mb-6 sm:mb-10">
+            <h2 class="text-xl sm:text-3xl font-semibold text-white tracking-tight mb-1 sm:mb-2">Ajude na nossa Bagagem</h2>
+            <p class="text-blue-300 font-medium text-sm sm:text-lg">(e concorra a um Voucher Airbnb de R$ 500)</p>
+            <div class="mt-3 sm:mt-4 inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/20 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full border border-blue-400/30 text-blue-200 text-xs sm:text-sm font-semibold">
+                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 Valor do bilhete: R$ 30,00
             </div>
         </div>
 
+        <!-- Top Checkout Bar -->
+        @if(count($selectedNumbers) > 0)
+            <div class="bg-blue-900/40 border border-blue-400/30 rounded-2xl p-4 sm:p-6 mb-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 animate-scale-up">
+                <div class="text-center sm:text-left">
+                    <div class="text-blue-200 text-xs sm:text-sm mb-0.5">Você selecionou <span class="font-bold text-white">{{ count($selectedNumbers) }}</span> assento(s)</div>
+                    <div class="text-xl sm:text-2xl font-bold text-white">Total: <span class="text-green-400">R$ {{ count($selectedNumbers) * 30 }},00</span></div>
+                </div>
+                <button type="button" wire:click="openModal" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold text-sm sm:text-base rounded-xl px-6 py-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all">
+                    Ir para o Pagamento
+                </button>
+            </div>
+        @endif
+
         <!-- Grid / Map -->
-        <div class="bg-[#0f172a]/80 p-4 sm:p-6 rounded-2xl border border-white/10 shadow-inner mb-6">
-            <div class="flex justify-between items-center mb-4 text-xs font-semibold text-blue-300 uppercase tracking-widest px-2">
+        <div class="bg-[#0f172a]/80 p-3 sm:p-6 rounded-2xl border border-white/10 shadow-inner mb-6">
+            <div class="flex justify-between items-center mb-3 sm:mb-4 text-[10px] sm:text-xs font-semibold text-blue-300 uppercase tracking-widest px-1 sm:px-2">
                 <span>Frente</span>
                 <span>Aeronave</span>
             </div>
             
-            <div class="grid grid-cols-4 sm:grid-cols-8 md:grid-cols-10 gap-2 sm:gap-3 justify-items-center">
+            <div class="grid grid-cols-5 min-[400px]:grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-1.5 sm:gap-2.5 justify-items-center">
                 @for ($i = 1; $i <= 200; $i++)
                     @php
                         $ticket = $tickets->get($i);
@@ -36,20 +49,20 @@
                         @if($isUnavailable) disabled @endif
                         wire:click="toggleSelection({{ $i }})"
                         class="
-                            w-10 h-12 sm:w-12 sm:h-14 rounded-t-lg rounded-b flex items-center justify-center font-bold text-sm sm:text-base transition-all relative
+                            w-full h-9 sm:h-12 md:h-14 rounded-t-md sm:rounded-t-lg rounded-b flex items-center justify-center font-bold text-xs sm:text-sm md:text-base transition-all relative
                             @if($isUnavailable)
                                 bg-white/10 text-white/30 border border-transparent cursor-not-allowed
                             @elseif($isSelected)
                                 bg-blue-600 text-white border-2 border-white shadow-[inset_0_4px_4px_rgba(0,0,0,0.4)] transform translate-y-0.5
                             @else
-                                bg-[#0a1128] text-white border border-blue-400 hover:bg-blue-800 hover:border-blue-300 cursor-pointer shadow-[0_0_10px_rgba(59,130,246,0.1)] hover:-translate-y-1 hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]
+                                bg-[#0a1128] text-white border border-blue-400/80 hover:bg-blue-800 hover:border-blue-300 cursor-pointer shadow-[0_0_8px_rgba(59,130,246,0.1)] hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(59,130,246,0.5)]
                             @endif
                         "
                     >
                         {{ $i }}
                         @if($isUnavailable)
                             <div class="absolute inset-0 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                <svg class="w-4 h-4 sm:w-6 sm:h-6 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </div>
                         @endif
                     </button>
@@ -59,12 +72,12 @@
 
         <!-- Checkout Bar -->
         @if(count($selectedNumbers) > 0)
-            <div class="bg-blue-900/40 border border-blue-400/30 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 animate-scale-up">
-                <div>
-                    <div class="text-blue-200 text-sm mb-1">Você selecionou <span class="font-bold text-white">{{ count($selectedNumbers) }}</span> assento(s)</div>
-                    <div class="text-2xl font-bold text-white">Total: <span class="text-green-400">R$ {{ count($selectedNumbers) * 30 }},00</span></div>
+            <div class="bg-blue-900/40 border border-blue-400/30 rounded-2xl p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 animate-scale-up">
+                <div class="text-center sm:text-left">
+                    <div class="text-blue-200 text-xs sm:text-sm mb-0.5">Você selecionou <span class="font-bold text-white">{{ count($selectedNumbers) }}</span> assento(s)</div>
+                    <div class="text-xl sm:text-2xl font-bold text-white">Total: <span class="text-green-400">R$ {{ count($selectedNumbers) * 30 }},00</span></div>
                 </div>
-                <button type="button" wire:click="openModal" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold rounded-xl px-8 py-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all">
+                <button type="button" wire:click="openModal" class="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold text-sm sm:text-base rounded-xl px-6 py-3 shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all">
                     Ir para o Pagamento
                 </button>
             </div>

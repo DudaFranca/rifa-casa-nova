@@ -20,6 +20,14 @@ class AdminPanel extends Component
         }
     }
 
+    public function cancelGuest($guestId)
+    {
+        $guest = Guest::find($guestId);
+        if ($guest) {
+            $guest->delete();
+        }
+    }
+
     public function markAsPaid($ticketId)
     {
         $ticket = RaffleTicket::find($ticketId);
@@ -31,7 +39,7 @@ class AdminPanel extends Component
     public function cancelTicket($ticketId)
     {
         $ticket = RaffleTicket::find($ticketId);
-        if ($ticket) {
+        if ($ticket && $ticket->status !== 'paid') {
             $ticket->delete();
         }
     }
@@ -48,11 +56,14 @@ class AdminPanel extends Component
         });
 
         $tickets = RaffleTicket::whereIn('status', ['reserved', 'paid'])->get();
+        $totalPaidTickets = $tickets->where('status', 'paid')->count();
+        $totalRaised = $totalPaidTickets * 30;
 
         return view('livewire.admin-panel', [
             'guests' => $guests,
             'totalConfirmed' => $totalConfirmed,
             'tickets' => $tickets,
+            'totalRaised' => $totalRaised,
         ])->layout('components.layouts.app');
     }
 }

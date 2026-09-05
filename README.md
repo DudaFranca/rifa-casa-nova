@@ -1,6 +1,6 @@
-# A&E Casa Nova (Flight CSN-2026) ✈️
+# A&D Casa Nova (Flight CSN-2026) ✈️
 
-Este é o sistema desenvolvido para a comemoração de "Casa Nova" de Arthur & Eduarda. O projeto funciona como um convite interativo no formato de passagem aérea, permitindo confirmação de presença (Check-in) e a venda/reserva de rifas (Bagagem).
+Este é o sistema desenvolvido para a comemoração de "Casa Nova" de Arthur & Duda. O projeto funciona como um convite interativo no formato de passagem aérea, permitindo confirmação de presença (Check-in) e a venda/reserva de rifas (Bagagem).
 
 ## 🛠️ Stack Tecnológica
 - **Backend:** Laravel 11.x

@@ -18,8 +18,10 @@ class RaffleGrid extends Component
 
     public function toggleSelection($number)
     {
-        if (in_array($number, $this->selectedNumbers)) {
-            $this->selectedNumbers = array_diff($this->selectedNumbers, [$number]);
+        $number = (int) $number;
+
+        if (in_array($number, $this->selectedNumbers, true)) {
+            $this->selectedNumbers = array_values(array_diff($this->selectedNumbers, [$number]));
         } else {
             $this->selectedNumbers[] = $number;
         }
