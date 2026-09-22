@@ -88,24 +88,44 @@
                             </div>
                         </div>
 
-                        <!-- Grid Section (4 columns) -->
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
-                            <div class="flex flex-col items-start">
+                        <!-- Grid Section (4 columns layout: Destino 1x, Local 2x, Embarque 1x) -->
+                        <div class="grid grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+                            <div class="col-span-1 flex flex-col items-start">
                                 <span class="text-[9px] sm:text-[11px] font-semibold tracking-[0.15em] text-[#60a5fa] uppercase mb-1">Destino</span>
-                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight">Casa Nova</span>
+                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight whitespace-nowrap">Casa Nova</span>
                             </div>
-                            <div class="flex flex-col items-start">
-                                <span class="text-[9px] sm:text-[11px] font-semibold tracking-[0.15em] text-[#60a5fa] uppercase mb-1">Confirmar Até</span>
-                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight">18.09</span>
-                            </div>
-                            <div class="flex flex-col items-start">
+                            <div class="col-span-2 flex flex-col items-start">
                                 <span class="text-[9px] sm:text-[11px] font-semibold tracking-[0.15em] text-[#60a5fa] uppercase mb-1">Local</span>
-                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight">Em breve</span>
+                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight whitespace-nowrap">Pizzaria Atlântico Graças</span>
                             </div>
-                            <div class="flex flex-col items-start">
+                            <div class="col-span-1 flex flex-col items-start">
                                 <span class="text-[9px] sm:text-[11px] font-semibold tracking-[0.15em] text-[#60a5fa] uppercase mb-1">Embarque</span>
-                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight">07.11.2026</span>
+                                <span class="text-base sm:text-xl md:text-2xl font-bold text-white tracking-tight whitespace-nowrap">07.11.2026</span>
+                                <span class="text-xs sm:text-base font-semibold text-blue-300 mt-0.5 sm:mt-1">19h</span>
                             </div>
+                        </div>
+
+                        <!-- Área de Observação / Endereço -->
+                        <div class="p-3.5 sm:p-4 bg-blue-950/40 border border-blue-400/20 rounded-xl sm:rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs sm:text-sm text-blue-100/90 mb-8 sm:mb-12">
+                            <div class="flex items-start gap-2.5">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#60a5fa] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <div>
+                                    <span class="font-semibold text-blue-300 block text-[10px] sm:text-xs uppercase tracking-wider mb-0.5">Endereço</span>
+                                    <span>Av. Rui Barbosa, 500 - Graças, Recife - PE, 52011-040</span>
+                                </div>
+                            </div>
+                            <a href="https://maps.google.com/?q=Av.+Rui+Barbosa,+500+-+Gra%C3%A7as,+Recife+-+PE,+52011-040" 
+                               target="_blank" 
+                               rel="noopener noreferrer" 
+                               class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#60a5fa]/10 hover:bg-[#60a5fa]/20 text-[#60a5fa] border border-[#60a5fa]/30 rounded-lg text-xs font-medium transition-colors shrink-0 self-end sm:self-auto">
+                                <span>Ver no Google Maps</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                            </a>
                         </div>
 
                         <!-- Perforated Line & Cutouts (in normal flow) -->

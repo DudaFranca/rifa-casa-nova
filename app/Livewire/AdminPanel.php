@@ -57,12 +57,15 @@ class AdminPanel extends Component
 
         $tickets = RaffleTicket::whereIn('status', ['reserved', 'paid'])->get();
         $totalPaidTickets = $tickets->where('status', 'paid')->count();
+        $totalReservedTickets = $tickets->where('status', 'reserved')->count();
         $totalRaised = $totalPaidTickets * 30;
 
         return view('livewire.admin-panel', [
             'guests' => $guests,
             'totalConfirmed' => $totalConfirmed,
             'tickets' => $tickets,
+            'totalPaidTickets' => $totalPaidTickets,
+            'totalReservedTickets' => $totalReservedTickets,
             'totalRaised' => $totalRaised,
         ])->layout('components.layouts.app');
     }

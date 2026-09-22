@@ -2,18 +2,27 @@
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
         <h1 class="text-3xl font-bold text-blue-300">Torre de Controle</h1>
         <div class="flex flex-wrap sm:flex-nowrap gap-4 w-full md:w-auto">
-            <div class="bg-blue-900/60 border border-blue-400/30 rounded-xl px-6 py-3 text-center flex-1 sm:flex-none">
-                <div class="text-xs text-blue-200 uppercase tracking-wider mb-1 font-medium">Total de Pessoas Confirmadas</div>
+            <div class="bg-blue-900/60 border border-blue-400/30 rounded-xl px-5 py-3 text-center flex-1 sm:flex-none">
+                <div class="text-xs text-blue-200 uppercase tracking-wider mb-1 font-medium">Pessoas Confirmadas</div>
                 <div class="text-3xl font-bold text-white">{{ $totalConfirmed }}</div>
             </div>
-            <div class="bg-green-900/40 border border-green-400/30 rounded-xl px-6 py-3 text-center flex-1 sm:flex-none">
+            <div class="bg-purple-900/40 border border-purple-400/30 rounded-xl px-5 py-3 text-center flex-1 sm:flex-none">
+                <div class="text-xs text-purple-200 uppercase tracking-wider mb-1 font-medium">Rifas Vendidas</div>
+                <div class="text-3xl font-bold text-purple-300 flex items-center justify-center gap-1.5">
+                    <span>{{ $totalPaidTickets }}</span>
+                    @if($totalReservedTickets > 0)
+                        <span class="text-xs font-normal text-purple-200/70" title="{{ $totalReservedTickets }} reservadas pendentes de PIX">(+{{ $totalReservedTickets }} res.)</span>
+                    @endif
+                </div>
+            </div>
+            <div class="bg-green-900/40 border border-green-400/30 rounded-xl px-5 py-3 text-center flex-1 sm:flex-none">
                 <div class="text-xs text-green-200 uppercase tracking-wider mb-1 font-medium">Valor Arrecadado</div>
                 <div class="text-3xl font-bold text-green-400">R$ {{ number_format($totalRaised, 2, ',', '.') }}</div>
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="flex flex-col gap-8">
         <!-- Check-in -->
         <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10">
             <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
@@ -34,11 +43,11 @@
                     <tbody>
                         @forelse($guests as $guest)
                         <tr class="border-b border-white/5 hover:bg-white/5">
-                            <td class="py-3 px-4">{{ $guest->name }}</td>
-                            <td class="py-3 px-4">{{ $guest->phone }}</td>
+                            <td class="py-3 px-4 font-medium">{{ $guest->name }}</td>
+                            <td class="py-3 px-4 whitespace-nowrap">{{ $guest->phone }}</td>
                             <td class="py-3 px-4">{{ $guest->companions_count ?? 0 }}</td>
-                            <td class="py-3 px-4 max-w-xs truncate" title="{{ $guest->message }}">{{ $guest->message ?? '-' }}</td>
-                            <td class="py-3 px-4 text-right">
+                            <td class="py-3 px-4 whitespace-normal break-words">{{ $guest->message ?? '-' }}</td>
+                            <td class="py-3 px-4 text-right whitespace-nowrap">
                                 <button wire:click="cancelGuest({{ $guest->id }})" 
                                         wire:confirm="Tem certeza que deseja cancelar a presença de {{ $guest->name }}?"
                                         class="bg-red-500/20 hover:bg-red-600 text-red-300 hover:text-white border border-red-500/30 text-xs px-3 py-1.5 rounded-lg transition-colors">
@@ -58,10 +67,22 @@
 
         <!-- Bagagem (Rifa) -->
         <div class="bg-white/5 backdrop-blur-md rounded-3xl p-6 border border-white/10">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                Bagagem (Gestão da Rifa)
-            </h2>
+            <div class="flex items-center justify-between mb-6 flex-wrap gap-2">
+                <h2 class="text-xl font-semibold flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                    Bagagem (Gestão da Rifa)
+                </h2>
+                <div class="flex items-center gap-2">
+                    <span class="bg-purple-500/20 text-purple-300 text-xs px-3 py-1 rounded-full border border-purple-500/30 font-medium">
+                        {{ $totalPaidTickets }} Vendidos (Pagos)
+                    </span>
+                    @if($totalReservedTickets > 0)
+                        <span class="bg-yellow-500/20 text-yellow-300 text-xs px-3 py-1 rounded-full border border-yellow-500/30 font-medium">
+                            {{ $totalReservedTickets }} Reservados
+                        </span>
+                    @endif
+                </div>
+            </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
